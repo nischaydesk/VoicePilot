@@ -18,9 +18,11 @@ jobs:
         find . -name "*.zip" -exec unzip -o {} +
         ls -la
 
-    - name: Auto-fix Kotlin singleLine compilation error
+    - name: Clean and Fix Kotlin Syntax
       run: |
-        # MainActivity.kt में मौजूद singleLine वाली त्रुटि को ऑटोमैटिक ठीक करना
+        # गलत रिप्लेसमेंट और singleLine दोनों को एक ही बार में शुद्ध 'maxLines = 1' में बदलना
+        find . -name "MainActivity.kt" -exec sed -i 's/maxLines = 1 = true/maxLines = 1/g' {} +
+        find . -name "MainActivity.kt" -exec sed -i 's/singleLine = true/maxLines = 1/g' {} +
         find . -name "MainActivity.kt" -exec sed -i 's/singleLine/maxLines = 1/g' {} +
 
     - name: Set up JDK 17
